@@ -10,6 +10,7 @@ import com.project.trello.domain.workspace.repository.WorkspaceRepository;
 import com.project.trello.global.customException.CustomException;
 import com.project.trello.global.customException.ExceptionType;
 import com.project.trello.global.enums.MemberRole;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -66,5 +67,13 @@ public class WorkspaceService {
         Member member  = memberRepository.findByWorkspace_Id(workspace.getId());
 
         return new WorkspaceResponseDto(workspace, member.getUser().getId());
+    }
+
+    // 워크스페이스 삭제
+    @Transactional
+    public void deleteWorkspace(Long workspaceId) {
+
+        Workspace workspace = workspaceRepository.findById(workspaceId).orElseThrow(() -> new CustomException(ExceptionType.DELETED_USER));
+        workspaceRepository.delete(workspace);
     }
 }

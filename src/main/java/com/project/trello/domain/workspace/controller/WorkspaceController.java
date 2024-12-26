@@ -3,8 +3,9 @@ package com.project.trello.domain.workspace.controller;
 import com.project.trello.domain.user.entity.User;
 import com.project.trello.domain.workspace.dto.WorkspaceRequestDto;
 import com.project.trello.domain.workspace.dto.WorkspaceResponseDto;
-import com.project.trello.domain.workspace.entity.Workspace;
 import com.project.trello.domain.workspace.service.WorkspaceService;
+import com.project.trello.global.customException.CustomException;
+import com.project.trello.global.customException.ExceptionType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 
 @RestController
@@ -63,4 +66,20 @@ public class WorkspaceController {
     }
 
     // 워크스페이스 삭제
+    @DeleteMapping("/{workspaceId}")
+    public ResponseEntity<String> deleteWorkspace(
+            HttpServletRequest request,
+            @PathVariable Long workspaceId
+    ) {
+        HttpSession session = request.getSession(false);
+        User user = (User) session.getAttribute("user");
+
+        if (!Objects.equals(user.getId(), workspaceId)) {
+            throw new CustomException(ExceptionType.WORKSPACE_NOT_FOUND);
+        }
+
+        workspaceService.deleteWorkspace(workspaceId);
+
+        return ResponseEntity.status(HttpStatus.OK).body("삭제완료");
+    }
 }
