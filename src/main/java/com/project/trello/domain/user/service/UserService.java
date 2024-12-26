@@ -1,6 +1,7 @@
 package com.project.trello.domain.user.service;
 
 import com.project.trello.domain.config.PasswordEncoder;
+import com.project.trello.domain.user.dto.UserDeleteRequestDto;
 import com.project.trello.domain.user.dto.UserLoginRequestDto;
 import com.project.trello.domain.user.dto.UserRequestDto;
 import com.project.trello.domain.user.dto.UserResponseDto;
@@ -11,6 +12,8 @@ import com.project.trello.global.customException.ExceptionType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +50,21 @@ public class UserService {
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new CustomException(ExceptionType.PASSWORD_NOT_CORRECT);
         }
+        if (user.getStatus().getName().equals("INACTIVE")) {
+            throw new CustomException(ExceptionType.DELETED_USER);
+        }
 
         return user;
+    }
+
+    // 탈퇴
+    @Transactional
+    public void deleteUser(UserDeleteRequestDto dto, Long id) {
+        User user = userRepository.findByEmail(dto.getEmail());
+        if (!Objects.equals(id, user.getUserId())) {
+            throw new CustomException(ExceptionType.USER_NOT_MATCH);
+        }
+
+        user.userDeleted();
     }
 }

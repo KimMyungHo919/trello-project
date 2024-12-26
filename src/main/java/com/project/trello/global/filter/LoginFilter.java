@@ -1,12 +1,10 @@
 package com.project.trello.global.filter;
 
-import com.project.trello.global.customException.CustomException;
-import com.project.trello.global.customException.ExceptionType;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.util.PatternMatchUtils;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 
@@ -15,13 +13,11 @@ public class LoginFilter implements Filter {
     private static final String[] WHITE_LIST = {"/", "/users/join", "/users/login"};
 
     @Override
-    public void doFilter(
-            ServletRequest request,
-            ServletResponse response,
-            FilterChain chain
-    ) throws IOException, ServletException, ResponseStatusException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
         String requestURI = httpRequest.getRequestURI();
 
         if (!isWhiteList(requestURI)) {
@@ -29,7 +25,12 @@ public class LoginFilter implements Filter {
             HttpSession session = httpRequest.getSession(false);
 
             if (session == null || session.getAttribute("user") == null) {
-                throw new CustomException(ExceptionType.NOT_LOGIN);
+                httpResponse.setCharacterEncoding("UTF-8");
+                httpResponse.setContentType("text/plain;charset=UTF-8");
+
+                httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                httpResponse.getWriter().write("로그인을 먼저 진행해주세요.");
+                return;
             }
         }
         chain.doFilter(request, response);

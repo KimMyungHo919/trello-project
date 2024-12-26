@@ -1,5 +1,6 @@
 package com.project.trello.domain.user.controller;
 
+import com.project.trello.domain.user.dto.UserDeleteRequestDto;
 import com.project.trello.domain.user.dto.UserLoginRequestDto;
 import com.project.trello.domain.user.dto.UserRequestDto;
 import com.project.trello.domain.user.dto.UserResponseDto;
@@ -13,10 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -64,5 +62,28 @@ public class UserController {
                 .body(resultUser);
     }
 
+    // 로그아웃
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        session.invalidate();
+
+        return ResponseEntity.status(HttpStatus.OK).body("로그아웃되었습니다.");
+    }
+
+
     // 탈퇴
+    @PatchMapping("/{id}/inactive")
+    public ResponseEntity<String> deleteUser(
+            HttpServletRequest request,
+            @RequestBody UserDeleteRequestDto dto,
+            @PathVariable Long id
+    ) {
+        userService.deleteUser(dto, id);
+
+        HttpSession session = request.getSession(false);
+        session.invalidate();
+
+        return ResponseEntity.status(HttpStatus.OK).body("탈퇴가 완료되었습니다.");
+    }
 }
