@@ -6,9 +6,11 @@ import com.project.trello.global.config.BaseTimeEntity;
 import com.project.trello.global.enums.MemberRole;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Member extends BaseTimeEntity {
 
     @Id

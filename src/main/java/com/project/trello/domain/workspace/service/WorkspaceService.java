@@ -43,4 +43,14 @@ public class WorkspaceService {
                 workspace.getSubTitle()
         );
     }
+
+    // 워크스페이스 단건 조회.
+    public WorkspaceResponseDto findWorkspace(Long id) {
+        Workspace workspace = workspaceRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ExceptionType.WORKSPACE_NOT_FOUND));
+
+        Member member  = memberRepository.findByWorkspace_Id(workspace.getId());
+
+        return new WorkspaceResponseDto(workspace, member.getUser().getId());
+    }
 }

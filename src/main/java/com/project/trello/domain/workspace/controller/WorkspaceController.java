@@ -11,10 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -39,4 +36,20 @@ public class WorkspaceController {
                 .status(HttpStatus.CREATED)
                 .body(workspace);
     }
+
+    // 워크스페이스 단건 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<WorkspaceResponseDto> findWorkspace(
+            @PathVariable Long id
+    ) {
+        WorkspaceResponseDto workspace = workspaceService.findWorkspace(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(workspace);
+    }
+
+    // 워크스페이스 수정
+
+    // 워크스페이스 삭제
 }
