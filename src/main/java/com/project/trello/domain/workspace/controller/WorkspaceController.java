@@ -50,6 +50,17 @@ public class WorkspaceController {
     }
 
     // 워크스페이스 수정
+    @PatchMapping("/{id}")
+    public ResponseEntity<WorkspaceResponseDto> updateWorkspace(
+            @PathVariable Long id,
+            @RequestBody WorkspaceRequestDto dto
+    ) {
+        WorkspaceResponseDto workspaceResponseDto = workspaceService.update(id, dto);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(workspaceResponseDto);
+    }
 
     // 워크스페이스 삭제
 }

@@ -53,4 +53,18 @@ public class WorkspaceService {
 
         return new WorkspaceResponseDto(workspace, member.getUser().getId());
     }
+
+    // 워크스페이스 수정
+    @Transactional
+    public WorkspaceResponseDto update(Long id, WorkspaceRequestDto dto) {
+        Workspace workspace = workspaceRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ExceptionType.WORKSPACE_NOT_FOUND));
+
+        workspace.updateTitle(dto.getTitle());
+        workspace.updateSubTitle(dto.getSubTitle());
+
+        Member member  = memberRepository.findByWorkspace_Id(workspace.getId());
+
+        return new WorkspaceResponseDto(workspace, member.getUser().getId());
+    }
 }

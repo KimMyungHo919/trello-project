@@ -11,6 +11,8 @@ public enum ExceptionType {
     PASSWORD_NOT_CORRECT(HttpStatus.BAD_REQUEST,  "비밀번호가 일치하지 않습니다."),
     ROLE_NOT_CORRECT(HttpStatus.BAD_REQUEST,  "해당 설정에 대한 권한이 없습니다."),
     PASSWORD_SAME(HttpStatus.BAD_REQUEST, "기존의 비밀번호와 일치합니다."),
+    TITLE_SAME(HttpStatus.BAD_REQUEST, "기존의 제목과 일치합니다."),
+    SUBTITLE_SAME(HttpStatus.BAD_REQUEST, "기존의 부제목과 일치합니다."),
     DELETED_USER(HttpStatus.BAD_REQUEST, "이미 탈퇴된 유저입니다."),
     USER_NOT_MATCH(HttpStatus.BAD_REQUEST, "잘못된 유저의 정보에 접근하고 있습니다."),
     BAD_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호는 영문자, 숫자, 특수문자를 포함하며 8자 이상이어야 합니다."),
