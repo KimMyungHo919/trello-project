@@ -1,4 +1,4 @@
-package com.project.trello.global;
+package com.project.trello.global.customException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

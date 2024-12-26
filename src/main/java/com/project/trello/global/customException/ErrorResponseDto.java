@@ -1,4 +1,4 @@
-package com.project.trello.global;
+package com.project.trello.global.customException;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;

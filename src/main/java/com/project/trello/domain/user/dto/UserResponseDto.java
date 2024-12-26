@@ -1,5 +1,6 @@
 package com.project.trello.domain.user.dto;
 
+import com.project.trello.domain.user.entity.User;
 import lombok.Getter;
 
 @Getter
@@ -13,5 +14,11 @@ public class UserResponseDto {
         this.userId = userId;
         this.email = email;
         this.role = role;
+    }
+
+    public UserResponseDto(User user) {
+        this.userId = user.getUserId();
+        this.email = user.getEmail();
+        this.role = user.getRole().getName();
     }
 }

@@ -1,7 +1,7 @@
 package com.project.trello.domain.enums;
 
-import com.project.trello.global.CustomException;
-import com.project.trello.global.ExceptionType;
+import com.project.trello.global.customException.CustomException;
+import com.project.trello.global.customException.ExceptionType;
 import lombok.Getter;
 
 @Getter
