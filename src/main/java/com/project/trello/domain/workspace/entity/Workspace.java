@@ -19,13 +19,13 @@ public class Workspace extends BaseTimeEntity {
     private Long id;
 
     private String title; // 워크스페이스 이름
-    private String subtitle; // 워크스페이스 부제목
+    private String subTitle; // 워크스페이스 부제목
 
     @OneToMany(mappedBy = "workspace", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Member> members = new ArrayList<>();
 
-    private Workspace(String title, String subtitle) {
+    public Workspace(String title, String subTitle) {
         this.title = title;
-        this.subtitle = subtitle;
+        this.subTitle = subTitle;
     }
 }

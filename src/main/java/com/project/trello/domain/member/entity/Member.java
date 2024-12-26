@@ -26,4 +26,9 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole; // ROLE_MEMBER, ROLE_ADMIN
 
+    public Member(User loginUser, Workspace workspace, MemberRole memberRole) {
+        this.user = loginUser;
+        this.workspace = workspace;
+        this.memberRole = memberRole;
+    }
 }
