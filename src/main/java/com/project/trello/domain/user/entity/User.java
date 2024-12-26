@@ -1,5 +1,6 @@
 package com.project.trello.domain.user.entity;
 
+import com.project.trello.domain.config.BaseTimeEntity;
 import com.project.trello.domain.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
