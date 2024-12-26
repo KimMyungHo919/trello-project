@@ -1,10 +1,9 @@
 package com.project.trello.domain.user.service;
 
-import com.project.trello.domain.config.PasswordEncoder;
+import com.project.trello.global.config.PasswordEncoder;
 import com.project.trello.domain.user.dto.UserDeleteRequestDto;
 import com.project.trello.domain.user.dto.UserLoginRequestDto;
 import com.project.trello.domain.user.dto.UserRequestDto;
-import com.project.trello.domain.user.dto.UserResponseDto;
 import com.project.trello.domain.user.entity.User;
 import com.project.trello.domain.user.repository.UserRepository;
 import com.project.trello.global.customException.CustomException;
@@ -61,7 +60,7 @@ public class UserService {
     @Transactional
     public void deleteUser(UserDeleteRequestDto dto, Long id) {
         User user = userRepository.findByEmail(dto.getEmail());
-        if (!Objects.equals(id, user.getUserId())) {
+        if (!Objects.equals(id, user.getId())) {
             throw new CustomException(ExceptionType.USER_NOT_MATCH);
         }
 

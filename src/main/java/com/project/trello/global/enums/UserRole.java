@@ -1,4 +1,4 @@
-package com.project.trello.domain.enums;
+package com.project.trello.global.enums;
 
 import com.project.trello.global.customException.CustomException;
 import com.project.trello.global.customException.ExceptionType;

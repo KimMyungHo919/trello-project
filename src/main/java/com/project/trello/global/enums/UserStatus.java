@@ -1,4 +1,4 @@
-package com.project.trello.domain.enums;
+package com.project.trello.global.enums;
 
 import lombok.Getter;
 

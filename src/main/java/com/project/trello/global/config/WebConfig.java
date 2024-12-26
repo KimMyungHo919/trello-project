@@ -1,4 +1,4 @@
-package com.project.trello.domain.config;
+package com.project.trello.global.config;
 
 import com.project.trello.global.filter.LoginFilter;
 import jakarta.servlet.Filter;

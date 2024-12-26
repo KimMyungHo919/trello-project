@@ -28,7 +28,7 @@ public class UserController {
     public ResponseEntity<UserResponseDto> join(@RequestBody @Valid UserRequestDto dto) {
         User user = userService.join(dto);
         UserResponseDto userResult = new UserResponseDto(
-                user.getUserId(),
+                user.getId(),
                 user.getEmail(),
                 user.getRole().getName()
         );

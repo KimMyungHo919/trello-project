@@ -1,4 +1,4 @@
-package com.project.trello.domain.config;
+package com.project.trello.global.config;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;

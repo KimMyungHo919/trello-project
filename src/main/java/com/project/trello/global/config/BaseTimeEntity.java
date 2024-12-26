@@ -1,4 +1,4 @@
-package com.project.trello.domain.config;
+package com.project.trello.global.config;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

@@ -1,13 +1,17 @@
 package com.project.trello.domain.user.entity;
 
-import com.project.trello.domain.config.BaseTimeEntity;
-import com.project.trello.domain.enums.UserRole;
-import com.project.trello.domain.enums.UserStatus;
+import com.project.trello.domain.member.entity.Member;
+import com.project.trello.global.config.BaseTimeEntity;
+import com.project.trello.global.enums.UserRole;
+import com.project.trello.global.enums.UserStatus;
 import com.project.trello.global.customException.CustomException;
 import com.project.trello.global.customException.ExceptionType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,7 +20,7 @@ public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
     private String email;
 
@@ -27,6 +31,9 @@ public class User extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
+
+    @OneToMany(mappedBy = "user")
+    private List<Member> members = new ArrayList<>();
 
     public User(String email, String password, String role) {
         this.email = email;
