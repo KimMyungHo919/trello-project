@@ -33,6 +33,10 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole; // ROLE_MEMBER, ROLE_ADMIN, ROLE_READ_ONLY
 
+    public Member(MemberRole memberRole) {
+        this.memberRole = memberRole;
+    }
+
     public Member(User loginUser, Workspace workspace, MemberRole memberRole) {
         this.user = loginUser;
         this.workspace = workspace;
@@ -45,4 +49,15 @@ public class Member extends BaseTimeEntity {
         }
         this.memberRole = memberRole;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getMembers().add(this);
+    }
+
+    public void setWorkspace(Workspace workspace) {
+        this.workspace = workspace;
+        workspace.getMembers().add(this);
+    }
+
 }

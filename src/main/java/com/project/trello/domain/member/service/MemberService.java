@@ -44,16 +44,17 @@ public class MemberService {
                 .orElseThrow(() -> new CustomException(ExceptionType.WORKSPACE_NOT_FOUND));
 
         // 멤버생성 후 저장. 유저,워크스페이스,권한
-        Member member = new Member(user, workspace, MemberRole.ROLE_MEMBER);
+        Member member = new Member(MemberRole.ROLE_MEMBER);
 
         // 중복처리.
         if (memberRepository.findByUserAndWorkspace(user, workspace).isPresent()) {
             throw new CustomException(ExceptionType.ALREADY_MEMBER);
         }
 
+        member.setUser(user);
+        member.setWorkspace(workspace);
         memberRepository.save(member);
-        user.getMembers().add(member);
-        workspace.getMembers().add(member);
+
 
         return new MemberResponseDto(user.getId(), workspace.getId(), member.getMemberRole());
     }
