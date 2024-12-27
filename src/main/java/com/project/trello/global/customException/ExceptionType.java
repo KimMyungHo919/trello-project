@@ -14,10 +14,12 @@ public enum ExceptionType {
     TITLE_SAME(HttpStatus.BAD_REQUEST, "기존의 제목과 일치합니다."),
     SUBTITLE_SAME(HttpStatus.BAD_REQUEST, "기존의 부제목과 일치합니다."),
     DELETED_USER(HttpStatus.BAD_REQUEST, "이미 탈퇴된 유저입니다."),
+    CHANGE_MEMBER_ROLE(HttpStatus.BAD_REQUEST, "이미 해당권한의 유저입니다."),
     USER_NOT_MATCH(HttpStatus.BAD_REQUEST, "잘못된 유저의 정보에 접근하고 있습니다."),
     BAD_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호는 영문자, 숫자, 특수문자를 포함하며 8자 이상이어야 합니다."),
     NOT_LOGIN(HttpStatus.UNAUTHORIZED, "로그인을 해주세요."),
     ALREADY_LOGIN(HttpStatus.UNAUTHORIZED, "이미 로그인한 사용자입니다."),
+    ALREADY_MEMBER(HttpStatus.UNAUTHORIZED, "이미 멤버입니다."),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND,  "해당 유저의 정보를 찾을 수 없습니다."),
     WORKSPACE_NOT_FOUND(HttpStatus.NOT_FOUND,  "워크스페이스를 찾을수 없습니다.");
 
