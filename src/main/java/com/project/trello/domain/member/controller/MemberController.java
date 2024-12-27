@@ -9,10 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +31,20 @@ public class MemberController {
                 .status(HttpStatus.CREATED)
                 .body(memberService.add(loginUser, dto)
                 );
+    }
+
+    // 멤버삭제
+    @DeleteMapping
+    public ResponseEntity<String> deleteMember(
+            HttpServletRequest request,
+            @RequestBody MemberRequestDto dto
+    ) {
+        HttpSession session = request.getSession(false);
+        User loginUser = (User) session.getAttribute("user");
+
+        memberService.deleteMember(loginUser, dto);
+
+        return ResponseEntity.status(HttpStatus.OK).body("멤버삭제 완료!");
     }
 
 }

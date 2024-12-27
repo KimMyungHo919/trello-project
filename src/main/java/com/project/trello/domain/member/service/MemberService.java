@@ -55,4 +55,19 @@ public class MemberService {
 
         return new MemberResponseDto(user.getId(), workspace.getId(), member.getMemberRole());
     }
+
+    // 멤버삭제
+    @Transactional
+    public void deleteMember(User loginUser, MemberRequestDto dto) {
+        // 로그인한 유저의 권한 확인.
+        if (!Objects.equals(UserRole.ROLE_ADMIN, loginUser.getRole())) {
+            throw new CustomException(ExceptionType.ROLE_NOT_CORRECT);
+        }
+        // dto로 멤버 찾아오기.
+        Member member = memberRepository
+                .findByUser_IdAndWorkspace_Id(dto.getUserID(), dto.getWorkspaceId())
+                .orElseThrow(() -> new CustomException(ExceptionType.USER_NOT_FOUND));
+        // 멤버 삭제.
+        memberRepository.delete(member);
+    }
 }
