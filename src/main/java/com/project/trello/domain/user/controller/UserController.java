@@ -1,9 +1,6 @@
 package com.project.trello.domain.user.controller;
 
-import com.project.trello.domain.user.dto.UserDeleteRequestDto;
-import com.project.trello.domain.user.dto.UserLoginRequestDto;
-import com.project.trello.domain.user.dto.UserRequestDto;
-import com.project.trello.domain.user.dto.UserResponseDto;
+import com.project.trello.domain.user.dto.*;
 import com.project.trello.domain.user.entity.User;
 import com.project.trello.domain.user.service.UserService;
 import com.project.trello.global.customException.CustomException;
@@ -15,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -86,4 +85,14 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).body("탈퇴가 완료되었습니다.");
     }
+
+    // 자신이 속해있는 워크스페이스 정보 전체조회
+    @GetMapping
+    public List<UserWorkspaceResponseDto> findMemberList(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        User user = (User) session.getAttribute("user");
+
+        return userService.findMembers(user.getId());
+    }
+
 }

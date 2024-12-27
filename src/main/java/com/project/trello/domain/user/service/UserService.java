@@ -1,5 +1,6 @@
 package com.project.trello.domain.user.service;
 
+import com.project.trello.domain.user.dto.UserWorkspaceResponseDto;
 import com.project.trello.global.config.PasswordEncoder;
 import com.project.trello.domain.user.dto.UserDeleteRequestDto;
 import com.project.trello.domain.user.dto.UserLoginRequestDto;
@@ -12,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -65,5 +67,20 @@ public class UserService {
         }
 
         user.userDeleted();
+    }
+
+    // 자신이 속해있는 워크스페이스 정보 전체조회
+    public List<UserWorkspaceResponseDto> findMembers(Long loginUserId) {
+        User user = userRepository.findById(loginUserId).orElseThrow(() -> new CustomException(ExceptionType.USER_NOT_FOUND));
+
+        return user.getMembers()
+                .stream()
+                .map(member -> new UserWorkspaceResponseDto(
+                        member.getWorkspace().getId(),
+                        member.getWorkspace().getTitle(),
+                        member.getWorkspace().getSubTitle(),
+                        member.getMemberRole().name()
+                ))
+                .toList();
     }
 }

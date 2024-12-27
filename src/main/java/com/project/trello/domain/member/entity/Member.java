@@ -1,5 +1,6 @@
 package com.project.trello.domain.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.trello.domain.user.entity.User;
 import com.project.trello.domain.workspace.entity.Workspace;
 import com.project.trello.global.config.BaseTimeEntity;

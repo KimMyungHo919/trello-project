@@ -52,6 +52,8 @@ public class MemberService {
         }
 
         memberRepository.save(member);
+        user.getMembers().add(member);
+        workspace.getMembers().add(member);
 
         return new MemberResponseDto(user.getId(), workspace.getId(), member.getMemberRole());
     }
