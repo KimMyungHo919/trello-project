@@ -88,11 +88,11 @@ public class UserController {
 
     // 자신이 속해있는 워크스페이스 정보 전체조회
     @GetMapping
-    public List<UserWorkspaceResponseDto> findMemberList(HttpServletRequest request) {
+    public List<UserWorkspaceResponseDto> findWorkspaceList(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         User user = (User) session.getAttribute("user");
 
-        return userService.findMembers(user.getId());
+        return userService.findWorkspaceList(user.getId());
     }
 
 }

@@ -70,8 +70,9 @@ public class UserService {
     }
 
     // 자신이 속해있는 워크스페이스 정보 전체조회
-    public List<UserWorkspaceResponseDto> findMembers(Long loginUserId) {
-        User user = userRepository.findById(loginUserId).orElseThrow(() -> new CustomException(ExceptionType.USER_NOT_FOUND));
+    public List<UserWorkspaceResponseDto> findWorkspaceList(Long loginUserId) {
+        User user = userRepository.findByIdWithMembersAndWorkspaces(loginUserId)
+                .orElseThrow(() -> new CustomException(ExceptionType.USER_NOT_FOUND));
 
         return user.getMembers()
                 .stream()
