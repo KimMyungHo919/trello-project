@@ -33,7 +33,7 @@ public class WorkspaceController {
         HttpSession session = request.getSession(false);
         User loginUser = (User) session.getAttribute("user");
 
-        WorkspaceResponseDto workspace = workspaceService.create(loginUser, dto);
+        WorkspaceResponseDto workspace = workspaceService.create(loginUser.getId(), dto);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -41,11 +41,11 @@ public class WorkspaceController {
     }
 
     // 워크스페이스 단건 조회
-    @GetMapping("/{id}")
+    @GetMapping("/{workspaceId}")
     public ResponseEntity<WorkspaceResponseDto> findWorkspace(
-            @PathVariable Long id
+            @PathVariable Long workspaceId
     ) {
-        WorkspaceResponseDto workspace = workspaceService.findWorkspace(id);
+        WorkspaceResponseDto workspace = workspaceService.findWorkspace(workspaceId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -53,12 +53,12 @@ public class WorkspaceController {
     }
 
     // 워크스페이스 수정
-    @PatchMapping("/{id}")
+    @PatchMapping("/{workspaceId}")
     public ResponseEntity<WorkspaceResponseDto> updateWorkspace(
-            @PathVariable Long id,
+            @PathVariable Long workspaceId,
             @RequestBody WorkspaceRequestDto dto
     ) {
-        WorkspaceResponseDto workspaceResponseDto = workspaceService.update(id, dto);
+        WorkspaceResponseDto workspaceResponseDto = workspaceService.update(workspaceId, dto);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
