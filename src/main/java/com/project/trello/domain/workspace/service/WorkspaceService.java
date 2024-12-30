@@ -28,8 +28,7 @@ public class WorkspaceService {
     // 워크스페이스 생성. ADMIN 권한을 가진 유저만 생성가능.
     @Transactional
     public WorkspaceResponseDto create(Long loginUserId, WorkspaceRequestDto dto) {
-        User loginUser = userRepository.findById(loginUserId)
-                .orElseThrow(() -> new CustomException(ExceptionType.USER_NOT_FOUND));
+        User loginUser = userRepository.findByUserId(loginUserId);
 
         if (!Objects.equals("ROLE_ADMIN", loginUser.getRole().getName())) {
             throw new CustomException(ExceptionType.ROLE_NOT_CORRECT);
@@ -51,8 +50,7 @@ public class WorkspaceService {
 
     // 워크스페이스 단건 조회.
     public WorkspaceResponseDto findWorkspace(Long workspaceId) {
-        Workspace workspace = workspaceRepository.findById(workspaceId)
-                .orElseThrow(() -> new CustomException(ExceptionType.WORKSPACE_NOT_FOUND));
+        Workspace workspace = workspaceRepository.findByWorkspaceId(workspaceId);
 
         Member member  = memberRepository.findByWorkspace_Id(workspace.getId());
 
@@ -62,8 +60,7 @@ public class WorkspaceService {
     // 워크스페이스 수정
     @Transactional
     public WorkspaceResponseDto update(Long workspaceId, WorkspaceRequestDto dto) {
-        Workspace workspace = workspaceRepository.findById(workspaceId)
-                .orElseThrow(() -> new CustomException(ExceptionType.WORKSPACE_NOT_FOUND));
+        Workspace workspace = workspaceRepository.findByWorkspaceId(workspaceId);
 
         workspace.updateTitle(dto.getTitle());
         workspace.updateSubTitle(dto.getSubTitle());
@@ -77,7 +74,7 @@ public class WorkspaceService {
     @Transactional
     public void deleteWorkspace(Long workspaceId) {
 
-        Workspace workspace = workspaceRepository.findById(workspaceId).orElseThrow(() -> new CustomException(ExceptionType.DELETED_USER));
+        Workspace workspace = workspaceRepository.findByWorkspaceId(workspaceId);
         workspaceRepository.delete(workspace);
     }
 }
